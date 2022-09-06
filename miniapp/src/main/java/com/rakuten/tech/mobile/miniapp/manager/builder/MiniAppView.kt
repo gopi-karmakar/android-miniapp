@@ -7,7 +7,7 @@ import com.rakuten.tech.mobile.miniapp.*
 import com.rakuten.tech.mobile.miniapp.manager.provider.Provider
 import com.rakuten.tech.mobile.miniapp.storage.CachedManifest
 
-internal class MiniApp(
+internal class MiniAppView(
     private val context: Context
 ) {
 
@@ -23,7 +23,7 @@ internal class MiniApp(
         return cachedMiniApp
     }
 
-    internal suspend fun create(miniAppConfig: MiniAppConfig): MiniApp {
+    internal suspend fun create(miniAppConfig: MiniAppConfig): MiniAppView {
         try {
             provider = Provider(context, miniAppConfig.miniAppSdkConfig)
             val cachedMiniApp = getCachedMiniAppIfExist(miniAppConfig)

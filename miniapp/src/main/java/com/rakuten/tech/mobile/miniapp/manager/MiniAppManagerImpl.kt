@@ -1,11 +1,8 @@
 package com.rakuten.tech.mobile.miniapp.manager
 
 import com.rakuten.tech.mobile.miniapp.*
-import com.rakuten.tech.mobile.miniapp.file.MiniAppFileChooser
-import com.rakuten.tech.mobile.miniapp.js.MiniAppMessageBridge
-import com.rakuten.tech.mobile.miniapp.manager.builder.MiniApp
+import com.rakuten.tech.mobile.miniapp.manager.builder.MiniAppView
 import com.rakuten.tech.mobile.miniapp.manager.builder.MiniAppConfig
-import com.rakuten.tech.mobile.miniapp.navigator.MiniAppNavigator
 import com.rakuten.tech.mobile.miniapp.permission.MiniAppCustomPermission
 
 internal abstract class MiniAppManagerImpl {
@@ -57,5 +54,5 @@ internal abstract class MiniAppManagerImpl {
     @Throws(MiniAppSdkException::class)
     abstract suspend fun create(
         miniAppConfig: MiniAppConfig
-    ): MiniApp
+    ): MiniAppView
 }
