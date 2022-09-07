@@ -10,6 +10,10 @@ import com.rakuten.tech.mobile.miniapp.sdkExceptionForInvalidArguments
 
 internal class MiniAppManager private constructor(): MiniAppManagerImpl() {
 
+    init {
+        // Initialize MiniAppViewHandler Object here.
+    }
+
     companion object {
 
         @SuppressLint("StaticFieldLeak")
