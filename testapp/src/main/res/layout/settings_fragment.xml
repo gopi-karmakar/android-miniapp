@@ -6,17 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/SettingsToolBarTheme"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,6 +89,31 @@
                     android:paddingBottom="@dimen/small_4"
                     android:text="@string/lb_ras" />
 
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleListGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/AppTheme.MaterialButtonToggleGroup"
+                    app:singleSelection="true"
+                    app:checkedButton="@id/toggleList1">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleList1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="List I" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleList2"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="List II" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputProjectId"
                     android:layout_width="match_parent"
@@ -108,7 +125,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editProjectId"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/large_48"
                         android:hint="@string/hint_host_project_id"
                         android:imeOptions="actionDone"
                         android:inputType="text" />
@@ -125,7 +142,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editSubscriptionKey"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/large_48"
                         android:hint="@string/hint_subscription_key"
                         android:imeOptions="actionDone"
                         android:inputType="text" />
@@ -258,10 +275,11 @@
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editParametersUrl"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/large_48"
                         android:hint="@string/hint_miniapp_url_parameters"
                         android:imeOptions="actionDone"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>

@@ -12,7 +12,7 @@ internal const val DB_NAME_PREFIX = "rmapp-"
 @Suppress("TooManyFunctions", "LargeClass")
 internal class MiniAppSecureStorageDispatcher(
     internal var context: Context,
-    private var maxStorageSizeLimit: Int
+    private var maxStorageSizeLimitInBytes: Long
 ) {
     private val databaseVersion = 1
     private lateinit var miniAppId: String
@@ -43,12 +43,12 @@ internal class MiniAppSecureStorageDispatcher(
         this.miniAppSecureStorage = MiniAppSecureStorage(
             context,
             databaseVersion,
-            maxStorageSizeLimit
+            maxStorageSizeLimitInBytes
         )
     }
 
-    fun updateMiniAppStorageMaxLimit(maxStorageInMB: Int) {
-        maxStorageSizeLimit = (maxStorageInMB * CONVERT_TO_KB)
+    fun updateMiniAppStorageMaxLimit(maxStorageLimitInBytes: Long) {
+        maxStorageSizeLimitInBytes = maxStorageLimitInBytes
     }
 
     @Suppress("ComplexCondition")
@@ -163,10 +163,9 @@ internal class MiniAppSecureStorageDispatcher(
     @Deprecated("No Longer Needed")
     fun onSize(callbackId: String) = whenReady {
         onSuccessDBSize = { fileSize: Long ->
-            val maxSizeInBytes = maxStorageSizeLimit * 1024
-            val storageSize =
-                Gson().toJson(MiniAppSecureStorageSize(fileSize, maxSizeInBytes.toLong()))
-            bridgeExecutor.postValue(callbackId, storageSize)
+            val maxStorageSizeLimit =
+                Gson().toJson(MiniAppSecureStorageSize(fileSize, maxStorageSizeLimitInBytes))
+            bridgeExecutor.postValue(callbackId, maxStorageSizeLimit)
         }
         miniAppSecureStorage.getDatabaseUsedSize(onSuccessDBSize)
     }
@@ -175,14 +174,12 @@ internal class MiniAppSecureStorageDispatcher(
      * Will be invoked by MiniApp.clearSecureStorage(miniAppId: String).
      * @param miniAppId will be used to find the storage to be deleted.
      */
-    fun clearSecureStorage(miniAppId: String): Boolean {
-        return clearSecureDatabase(miniAppId)
-    }
+    fun clearSecureStorage(miniAppId: String): Boolean = clearSecureDatabase(miniAppId)
 
     /**
      * Will be invoked by MiniApp.clearSecureStorage.
      */
-    fun clearSecureStorage() {
+    fun clearSecureStorages() {
         clearAllSecureDatabases()
     }
 

@@ -45,7 +45,7 @@ class MiniAppSecureStorageDispatcherSpec {
     private val webViewListener: WebViewListener = mock()
     private val bridgeExecutor = Mockito.spy(MiniAppBridgeExecutor(webViewListener))
     private lateinit var miniAppSecureStorageDispatcher: MiniAppSecureStorageDispatcher
-    private val testMaxStorageSizeInKB = 1000
+    private val testMaxStorageSizeInKB = 1000L
     private val miniAppSecureStorage: MiniAppSecureStorage = mock()
     private val testJsonError = "Can not parse secure storage json object."
 
@@ -202,7 +202,7 @@ class MiniAppSecureStorageDispatcherSpec {
     @Test
     fun `clearSecureStorage should be called without the mini app id`() {
         miniAppSecureStorageDispatcher.miniAppSecureStorage = miniAppSecureStorage
-        miniAppSecureStorageDispatcher.clearSecureStorage()
+        miniAppSecureStorageDispatcher.clearSecureStorages()
         verify(
             miniAppSecureStorageDispatcher.miniAppSecureStorage,
             times(1)

@@ -39,7 +39,7 @@ internal class MiniAppSecureDatabase(
     @NonNull private var context: Context,
     @NonNull dbName: String, // MiniAppId will be the dbName
     @NonNull dbVersion: Int,
-    @NonNull private var maxDatabaseSize: Long
+    @NonNull private var maxDBSizeLimitInBytes: Long
 ) : MiniAppSecureDatabaseImpl(context, dbName, dbVersion) {
 
     private lateinit var database: SupportSQLiteDatabase
@@ -117,7 +117,7 @@ internal class MiniAppSecureDatabase(
     @Suppress("SwallowedException")
     override fun onDatabaseConfiguration(db: SupportSQLiteDatabase) {
         try {
-            db.maximumSize = maxDatabaseSize
+            db.maximumSize = maxDBSizeLimitInBytes
             db.execSQL(AUTO_VACUUM)
         } catch (e: SQLException) {
             MiniAppDatabaseStatus.UNAVAILABLE
@@ -179,12 +179,12 @@ internal class MiniAppSecureDatabase(
 
     override fun getDatabaseVersion(): Int = dbVersion
 
-    override fun getDatabaseMaxsize(): Long = maxDatabaseSize
+    override fun getDatabaseMaxsize(): Long = maxDBSizeLimitInBytes
 
     override fun getDatabaseStatus(): MiniAppDatabaseStatus = miniAppDatabaseStatus
 
-    override fun resetDatabaseMaxSize(changedDBMaxSize: Long) {
-        maxDatabaseSize = changedDBMaxSize
+    override fun resetDatabaseMaxSize(changedDBMaxSizeInBytes: Long) {
+        maxDBSizeLimitInBytes = changedDBMaxSizeInBytes
     }
 
     override fun getDatabaseUsedSize(): Long {
@@ -206,7 +206,7 @@ internal class MiniAppSecureDatabase(
     @Suppress("SwallowedException")
     override fun closeDatabase() {
         try {
-            if (database.isOpen) {
+            if (this::database.isInitialized && database.isOpen) {
                 if (miniAppDatabaseStatus == MiniAppDatabaseStatus.BUSY) {
                     miniAppDatabaseStatus = MiniAppDatabaseStatus.READY
                 }
@@ -435,7 +435,10 @@ internal class MiniAppSecureDatabase(
             throw e
         } finally {
             finalize()
+            if (!isDeleted && items.size > 1)
+                isDeleted = !isDeleted
         }
+
         return isDeleted
     }
 

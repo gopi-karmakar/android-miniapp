@@ -17,8 +17,8 @@ import com.rakuten.tech.mobile.miniapp.testapp.R
 import com.rakuten.tech.mobile.miniapp.testapp.databinding.MiniappDownloadedListActivityBinding
 import com.rakuten.tech.mobile.testapp.helper.MiniAppListStore
 import com.rakuten.tech.mobile.testapp.ui.base.BaseActivity
-import com.rakuten.tech.mobile.testapp.ui.miniapplist.MiniAppListViewModel
-import com.rakuten.tech.mobile.testapp.ui.miniapplist.MiniAppListViewModelFactory
+import com.rakuten.tech.mobile.testapp.ui.miniapptabs.viewModel.MiniAppListViewModel
+import com.rakuten.tech.mobile.testapp.ui.miniapptabs.viewModel.MiniAppListViewModelFactory
 import com.rakuten.tech.mobile.testapp.ui.settings.AppSettings
 import com.rakuten.tech.mobile.testapp.ui.settings.SettingsProgressDialog
 
@@ -28,7 +28,7 @@ class MiniAppDownloadedListActivity(private val miniApp: MiniApp) : BaseActivity
     override val pageName: String = this::class.simpleName ?: ""
     override val siteSection: String = this::class.simpleName ?: ""
 
-    constructor() : this(MiniApp.instance(AppSettings.instance.miniAppSettings))
+    constructor() : this(MiniApp.instance(AppSettings.instance.newMiniAppSdkConfig))
 
     private lateinit var adapter: MiniAppDownloadedListAdapter
     private lateinit var binding: MiniappDownloadedListActivityBinding
@@ -81,7 +81,7 @@ class MiniAppDownloadedListActivity(private val miniApp: MiniApp) : BaseActivity
 
     private fun loadList() {
         settingsProgressDialog.show()
-        val factory = MiniAppListViewModelFactory(MiniApp.instance(AppSettings.instance.miniAppSettings))
+        val factory = MiniAppListViewModelFactory(MiniApp.instance(AppSettings.instance.newMiniAppSdkConfig))
         viewModel =
                 ViewModelProvider(this, factory).get(MiniAppListViewModel::class.java).apply {
                 settingsProgressDialog.cancel()

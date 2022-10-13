@@ -1,8 +1,30 @@
 ## CHANGELOG
 
-### 4.3.0 (release date TBD)
+### 5.x.x (xxxx-xx-xx)
+**SDK**
+- **Feature:** Added `MiniAppView` to create multiple MiniApp views.
+- **Feature:** Added `MiniAppConfig` data class to hold configuration settings for the `MiniAppView`.
+- **Deprecated:** Old `create` and `createWithUrl` interfaces.
+- **Fix:** Made the `MaxStorageSize` Limit in Bytes.
+- **Fix:** Returning `onSuccess` for the Bulk Delete even if no items could be deleted.
+- **Update:** Refactored the `maxStorageSizeLimitInMB` parameter to `maxStorageSizeLimitInBytes` in `MiniAppSdkConfig`.
+
+**Sample App**
+- **Feature:** Demo App will now use a TabBar instead of a single screen.
+- **Feature:** Adding List I and List II for displaying multiple MiniApps at the same time and configurable through settings.
+- **Feature:** Features tab will start with URL feature to run MiniApps locally.
+- **Feature:** Settings is moved to it's own tab.
+
+### 4.3.0 (2022-08-09)
 **SDK**
 - **Feature:** Added `languageCode` in cached manifest to support localization of manifest.
+- **Fix:** Added bug fixes related to Secure storage feature.
+
+**Sample App**
+- **Feature:** Added bluetooth paired device detection on Android 12+ devices in QA settings screen.
+- **Feature:** Added UI in QA settings screen to upgrade the max storage size limit on runtime.
+- **Fix:** Displayed close confirmation dialog when MiniApp is closed using physical back button.
+- **Fix:** Added proper error message when name and email both inputs are empty in contact settings page.
 
 ### 4.2.0 (2022-06-24)
 **SDK**
